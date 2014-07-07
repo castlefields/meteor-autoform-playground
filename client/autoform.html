@@ -1,19 +1,24 @@
 <template name="autoform">
     {{#autoForm collection=Page doc=firstPage id="pagesForm" type=formMethod resetOnSuccess=false}}
 
-    {{> afQuickField name='title'}}
-    {{> afQuickField name='meta.description' rows='3'}}
+        {{> afQuickField name='title'}}
+        {{> afQuickField name='meta.description' rows='3'}}
 
 
-    <button type="submit" class="btn btn-primary">
-        <span class="glyphicon glyphicon-plus-sign"></span> Save
-    </button>
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            {{#if isUpdate}}
+                Update
+            {{else}}
+                Save
+            {{/if}}
+        </button>
 
 
     {{/autoForm}}
     <hr/>
     {{#if isUpdate}}
-    {{> afDeleteButton collection="Pages" doc=firstPage}}
+        {{> afDeleteButton collection="Pages" doc=firstPage}}
     {{/if}}
 
 </template>

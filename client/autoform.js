@@ -4,6 +4,7 @@ Template.autoform.helpers({
         return Pages; // return Pages collection
     },
     firstPage: function () {
+        //console.log(Pages.findOne())
         return Pages.findOne(); // find the first item
     },
 
@@ -12,16 +13,21 @@ Template.autoform.helpers({
     },
 
     isUpdate: function () {
-        return Template.autoform.firstPage(); // boolean for update
+        return Template.autoform.firstPage() ? true : false; // boolean for update
     }
 });
 
 Template.autoform.events({
     "blur #pagesForm :input, input #pagesForm :input, change #pagesForm :input": function (ev, templ) {
         window.clearTimeout($(this).data("timeout"));
+
+
         $(this).data("timeout", setTimeout(function () {
-            console.log("tryout autosave")
-            templ.$('form')[0].submit();
+            if (Template.autoform.isUpdate()) {
+                if (ev.target && !$(ev.target).hasClass("btn")) {
+                    templ.$('form#pagesForm').submit();
+                }
+            }
         }, 350));
     }
 

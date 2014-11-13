@@ -4,9 +4,14 @@
 
 <body>
 <div class="container">
-    <h1>Playground for meteor-autoform</h1>
+    {{> loginButtons}}
+    <h1>Playground for meteor-form</h1>
 
-    {{> autoform}}
+    {{#if currentUser}}
+        {{> pageForm}}
+    {{else}}
+        Please login
+    {{/if}}
 </div>
 </body>
 

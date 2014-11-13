@@ -1,16 +1,24 @@
 Meteor.publish(null, function () {
-    return Pages.find();
+  return Meteor.users.find({
+    _id: this.userId
+  }, {
+    fields: {
+      profile: 1,
+      languages: 1
+    }
+  })
 });
 
-Pages.allow({
-    insert: function (userId, doc) {
-        return true;
-    },
-    // TODO: proper check
-    update: function (userId, doc, fields, modifier) {
-        return true;
-    },
-    remove: function () {
-        return true;
+
+Meteor.methods({
+  updateUser: function (doc, modif, userId) {
+    if(!userId && !Meteor.users.find(userId) && userId !== this.userId) {
+      throw new Meteor.Error("This is not allowed");
     }
+
+    check(modif, UserSchema);
+
+    Meteor.users.update(userId, modif);
+
+  }
 });
